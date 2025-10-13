@@ -6,6 +6,10 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Set, List
 import ipaddress
+import warnings
+
+# 忽略SSL警告
+warnings.filterwarnings('ignore')
 
 class IPCrawler:
     def __init__(self):
@@ -16,7 +20,7 @@ class IPCrawler:
             'Connection': 'keep-alive',
         }
         
-        # 扩展的URL列表
+        # 扩展的URL列表（已修复所有中文逗号）
         self.urls = [
             'https://ip.164746.xyz',
             'https://cf.090227.xyz',
@@ -26,94 +30,86 @@ class IPCrawler:
             'https://ipdb.api.030101.xyz/?type=bestcf',
             'https://ipdb.api.030101.xyz/?type=bestproxy',
             'https://www.visa.cn',
-            'https://www.visa.cn',
-    'https://cf.877774.xyz',
-    'https://ct.877774.xyz',
-    'https://cmcc.877774.xyz',
-    'https://cu.877774.xyz',
-    'https://asia.877774.xyz',
-    'https://eur.877774.xyz',
-    'https://na.877774.xyz',
-    'https://bpb.yousef.isegaro.com',
-    
-    
-    'https://netlify-cname.xingpingcn.top'，
-    'https://vercel.001315.xyz'，
-    'https://vercel-cname.xingpingcn.top'，
-    'https://cnamefuckxxs.yuchen.icu',
-    'https://cdn.2020111.xyz'，
-    'https://cf-cname.xingpingcn.top'，
-    'https://cfcdn.v6.rocks'，
-    'https://aliyun.2096.us.kg'，
-    'https://cf.090227.xyz'，
-    'https://time.cloudflare.com'，
-    'https://checkout.shopify.com'，
-    'https://shopify.com',
-    'https://time.is',
-    'https://icook.hk',
-    'https://icook.tw'，
-    'https://ip.sb',
-    'https://japan.com',
-    'https://malaysia.com',
-    'https://russia.com',
-    'https://singapore.com',
-    'https://skk.moe',
-    'https://www.visa.com',
-    'https://www.visa.com.sg',
-    'https://www.visa.com.hk',
-    'https://www.visa.com.tw',
-    'https://www.visa.co.jp',
-    'https://www.visakorea.com',
-    'https://www.gco.gov.qa',
-    'https://www.gov.se',
-    'https://www.gov.ua',
-    'https://www.digitalocean.com',
-    'https://www.csgo.com',
-    'https://www.shopify.com',
-    'https://www.whoer.net',
-    'https://www.whatismyip.com',
-    'https://www.ipget.net',
-    'https://www.hugedomains.com',
-    'https://www.udacity.com',
-    'https://www.4chan.org',
-    'https://www.okcupid.com',
-    'https://www.glassdoor.com',
-    'https://www.udemy.com',
-    'https://www.baipiao.eu.org',
-    'https://cdn.anycast.eu.org',
-    
-    
-    'https://edgetunnel.anycast.eu.org',
-    'https://alejandracaiccedo.com',
-    'https://nc.gocada.co',
-    'https://log.bpminecraft.com',
-    'https://www.boba88slot.com',
-    'https://gur.gov.ua',
-    'https://www.zsu.gov.ua',
-    'https://www.iakeys.com',
-    'https://edtunnel-dgp.pages.dev',
-    'https://www.d-555.com',
-    'https://fbi.gov',
-   
-    'https://linux.do',
-    'https://cloudflare.182682.xyz',
-    'https://speed.marisalnc.com',
-    'https://freeyx.cloudflare88.eu.org',
-    'https://bestcf.top',
-    'https://cfip.cfcdn.vip',
-    'https://cf.0sm.com',
-    'https://cf.zhetengsha.eu.org',
-    'https://cloudflare.9jy.cc',
-    'https://cf.zerone-cdn.pp.ua',
-    'https://cfip.1323123.xyz',
-    'https://cloudflare-ip.mofashi.ltd',
-    'https://115155.xyz',
-    'https://cname.xirancdn.us',
-    'https://f3058171cad.002404.xyz',
-    'https://8.889288.xyz',
-    'https://cdn.tzpro.xyz',
-    'https://cf.877771.xyz'
-            
+            'https://cf.877774.xyz',
+            'https://ct.877774.xyz',
+            'https://cmcc.877774.xyz',
+            'https://cu.877774.xyz',
+            'https://asia.877774.xyz',
+            'https://eur.877774.xyz',
+            'https://na.877774.xyz',
+            'https://bpb.yousef.isegaro.com',
+            'https://netlify-cname.xingpingcn.top',
+            'https://vercel.001315.xyz',
+            'https://vercel-cname.xingpingcn.top',
+            'https://cnamefuckxxs.yuchen.icu',
+            'https://cdn.2020111.xyz',
+            'https://cf-cname.xingpingcn.top',
+            'https://cfcdn.v6.rocks',
+            'https://aliyun.2096.us.kg',
+            'https://time.cloudflare.com',
+            'https://checkout.shopify.com',
+            'https://shopify.com',
+            'https://time.is',
+            'https://icook.hk',
+            'https://icook.tw',
+            'https://ip.sb',
+            'https://japan.com',
+            'https://malaysia.com',
+            'https://russia.com',
+            'https://singapore.com',
+            'https://skk.moe',
+            'https://www.visa.com',
+            'https://www.visa.com.sg',
+            'https://www.visa.com.hk',
+            'https://www.visa.com.tw',
+            'https://www.visa.co.jp',
+            'https://www.visakorea.com',
+            'https://www.gco.gov.qa',
+            'https://www.gov.se',
+            'https://www.gov.ua',
+            'https://www.digitalocean.com',
+            'https://www.csgo.com',
+            'https://www.shopify.com',
+            'https://www.whoer.net',
+            'https://www.whatismyip.com',
+            'https://www.ipget.net',
+            'https://www.hugedomains.com',
+            'https://www.udacity.com',
+            'https://www.4chan.org',
+            'https://www.okcupid.com',
+            'https://www.glassdoor.com',
+            'https://www.udemy.com',
+            'https://www.baipiao.eu.org',
+            'https://cdn.anycast.eu.org',
+            'https://edgetunnel.anycast.eu.org',
+            'https://alejandracaiccedo.com',
+            'https://nc.gocada.co',
+            'https://log.bpminecraft.com',
+            'https://www.boba88slot.com',
+            'https://gur.gov.ua',
+            'https://www.zsu.gov.ua',
+            'https://www.iakeys.com',
+            'https://edtunnel-dgp.pages.dev',
+            'https://www.d-555.com',
+            'https://fbi.gov',
+            'https://linux.do',
+            'https://cloudflare.182682.xyz',
+            'https://speed.marisalnc.com',
+            'https://freeyx.cloudflare88.eu.org',
+            'https://bestcf.top',
+            'https://cfip.cfcdn.vip',
+            'https://cf.0sm.com',
+            'https://cf.zhetengsha.eu.org',
+            'https://cloudflare.9jy.cc',
+            'https://cf.zerone-cdn.pp.ua',
+            'https://cfip.1323123.xyz',
+            'https://cloudflare-ip.mofashi.ltd',
+            'https://115155.xyz',
+            'https://cname.xirancdn.us',
+            'https://f3058171cad.002404.xyz',
+            'https://8.889288.xyz',
+            'https://cdn.tzpro.xyz',
+            'https://cf.877771.xyz'
         ]
         
         # IP正则表达式
@@ -124,6 +120,8 @@ class IPCrawler:
         
         self.unique_ips = set()
         self.unique_ip_ports = set()
+        self.failed_urls = []
+        self.success_count = 0
     
     def is_valid_ip(self, ip: str) -> bool:
         """验证IP地址是否有效且为公网IP"""
@@ -135,8 +133,12 @@ class IPCrawler:
             # 排除一些特殊范围
             if ip.startswith(('0.', '10.', '127.', '169.254.', '172.', '192.168.', '224.', '240.', '255.')):
                 return False
+            # 额外排查172段的私有IP
+            parts = ip.split('.')
+            if parts[0] == '172' and 16 <= int(parts[1]) <= 31:
+                return False
             return True
-        except ValueError:
+        except (ValueError, IndexError):
             return False
     
     def extract_ips_from_html(self, html_content: str, url: str) -> Set[str]:
@@ -179,56 +181,76 @@ class IPCrawler:
                 if self.is_valid_ip(ip):
                     ips.add(ip)
             
-            print(f'✓ {url} - 找到 {len(ips)} 个有效IP')
+            if ips:
+                print(f'✓ {url[:60]}... - 找到 {len(ips)} 个有效IP')
+            else:
+                print(f'⊘ {url[:60]}... - 未找到有效IP')
             
         except Exception as e:
-            print(f'✗ 解析 {url} 的HTML内容失败: {e}')
+            print(f'✗ 解析 {url[:60]}... 失败: {str(e)[:50]}')
         
         return ips
     
-    def fetch_url(self, url: str, retry: int = 3) -> str:
+    def fetch_url(self, url: str, retry: int = 2) -> str:
         """获取URL内容，支持重试"""
         for attempt in range(retry):
             try:
                 response = requests.get(
                     url, 
                     headers=self.headers, 
-                    timeout=10,
-                    verify=False  # 如果遇到SSL证书问题
+                    timeout=15,
+                    verify=False,
+                    allow_redirects=True
                 )
                 
                 if response.status_code == 200:
+                    # 尝试检测编码
+                    response.encoding = response.apparent_encoding
                     return response.text
                 else:
-                    print(f'⚠ {url} 返回状态码: {response.status_code}')
+                    if attempt == retry - 1:
+                        print(f'⚠ {url[:60]}... 返回状态码: {response.status_code}')
                     
             except requests.exceptions.Timeout:
-                print(f'⏱ {url} 请求超时 (尝试 {attempt + 1}/{retry})')
+                if attempt == retry - 1:
+                    print(f'⏱ {url[:60]}... 请求超时')
+            except requests.exceptions.SSLError:
+                if attempt == retry - 1:
+                    print(f'🔒 {url[:60]}... SSL证书错误')
             except requests.exceptions.ConnectionError:
-                print(f'⚠ {url} 连接失败 (尝试 {attempt + 1}/{retry})')
+                if attempt == retry - 1:
+                    print(f'⚠ {url[:60]}... 连接失败')
             except requests.exceptions.RequestException as e:
-                print(f'✗ {url} 请求失败: {e}')
+                if attempt == retry - 1:
+                    print(f'✗ {url[:60]}... 请求失败: {str(e)[:30]}')
+                break
+            except Exception as e:
+                if attempt == retry - 1:
+                    print(f'✗ {url[:60]}... 未知错误: {str(e)[:30]}')
                 break
             
             if attempt < retry - 1:
-                time.sleep(2)  # 重试前等待
+                time.sleep(1)
         
         return None
     
     def crawl_single_url(self, url: str) -> Set[str]:
         """爬取单个URL"""
-        print(f'🔍 正在爬取: {url}')
+        print(f'🔍 正在爬取: {url[:70]}...')
         html_content = self.fetch_url(url)
         
         if html_content:
+            self.success_count += 1
             return self.extract_ips_from_html(html_content, url)
-        return set()
+        else:
+            self.failed_urls.append(url)
+            return set()
     
-    def crawl_all_urls(self, use_threading: bool = True, max_workers: int = 5):
+    def crawl_all_urls(self, use_threading: bool = True, max_workers: int = 10):
         """爬取所有URL"""
-        print('=' * 60)
-        print('开始爬取IP地址...')
-        print('=' * 60)
+        print('=' * 70)
+        print(f'开始爬取IP地址... (共 {len(self.urls)} 个URL)')
+        print('=' * 70)
         
         if use_threading:
             # 使用多线程并发爬取
@@ -241,20 +263,28 @@ class IPCrawler:
                         ips = future.result()
                         self.unique_ips.update(ips)
                     except Exception as e:
-                        print(f'✗ 处理 {url} 时出错: {e}')
+                        print(f'✗ 处理 {url[:60]}... 时出错: {str(e)[:50]}')
+                        self.failed_urls.append(url)
         else:
             # 串行爬取
             for url in self.urls:
                 ips = self.crawl_single_url(url)
                 self.unique_ips.update(ips)
-                time.sleep(1)  # 避免请求过快
+                time.sleep(0.5)
     
     def sort_ips(self, ips: Set[str]) -> List[str]:
         """按IP地址的数字顺序排序"""
-        return sorted(ips, key=lambda ip: [int(part) for part in ip.split('.')])
+        try:
+            return sorted(ips, key=lambda ip: [int(part) for part in ip.split('.')])
+        except:
+            return sorted(ips)
     
     def save_to_file(self, filename: str = 'ip.txt'):
         """保存IP地址到文件"""
+        print('\n' + '=' * 70)
+        print('保存结果...')
+        print('=' * 70)
+        
         # 删除旧文件
         if os.path.exists(filename):
             os.remove(filename)
@@ -266,12 +296,10 @@ class IPCrawler:
                 for ip in sorted_ips:
                     file.write(ip + '\n')
             
-            print('=' * 60)
             print(f'✓ 已保存 {len(sorted_ips)} 个唯一IP地址到 {filename}')
-            print('=' * 60)
             
             # 显示前10个IP作为示例
-            print('\n前10个IP地址:')
+            print('\n📋 前10个IP地址:')
             for ip in sorted_ips[:10]:
                 print(f'  • {ip}')
             if len(sorted_ips) > 10:
@@ -287,39 +315,78 @@ class IPCrawler:
             
             sorted_ip_ports = sorted(self.unique_ip_ports)
             with open(port_filename, 'w', encoding='utf-8') as file:
-                for ip_port in sorted_ip_ports:
+                for ip_port 在 sorted_ip_ports:
                     file.write(ip_port + '\n')
             
             print(f'\n✓ 已保存 {len(sorted_ip_ports)} 个IP:端口到 {port_filename}')
     
+    def print_statistics(self):
+        """打印统计信息"""
+        print('\n' + '=' * 70)
+        print('📊 统计信息')
+        print('=' * 70)
+        print(f'总URL数量: {len(self.urls)}')
+        print(f'成功爬取: {self.success_count}')
+        print(f'失败数量: {len(self.failed_urls)}')
+        print(f'唯一IP数: {len(self.unique_ips)}')
+        if self.unique_ip_ports:
+            print(f'IP:端口数: {len(self.unique_ip_ports)}')
+        
+        if self.failed_urls:
+            print(f'\n❌ 失败的URL (共{len(self.failed_urls)}个):')
+            for url in self.failed_urls[:5]:
+                print(f'  • {url}')
+            if len(self.failed_urls) > 5:
+                print(f'  ... 还有 {len(self.failed_urls) - 5} 个')
+    
     def add_custom_url(self, url: str):
         """添加自定义URL"""
         if url not in self.urls:
-            self.urls.append(url)
+            self.urls。append(url)
             print(f'✓ 已添加自定义URL: {url}')
     
     def run(self):
         """运行爬虫"""
         start_time = time.time()
         
-        # 禁用SSL警告
-        import urllib3
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-        
-        self.crawl_all_urls(use_threading=True, max_workers=5)
-        self.save_to_file()
+        try:
+            self.crawl_all_urls(use_threading=True, max_workers=10)
+            self.save_to_file()
+            self.print_statistics()
+        except KeyboardInterrupt:
+            print('\n\n⚠ 用户中断，正在保存已获取的数据...')
+            self.save_to_file()
+            self.print_statistics()
+        except Exception as e:
+            print(f'\n\n❌ 程序出错: {e}')
+            if self.unique_ips:
+                print('正在保存已获取的数据...')
+                self.save_to_file()
         
         elapsed_time = time.time() - start_time
         print(f'\n⏱ 总耗时: {elapsed_time:.2f} 秒')
+        print('=' * 70)
 
 
 def main():
+    """主函数"""
+    print("""
+╔═══════════════════════════════════════════════════════════════╗
+║                    IP地址批量爬虫工具                          ║
+║                     Version 2.0                                ║
+╚═══════════════════════════════════════════════════════════════╝
+    """)
+    
     crawler = IPCrawler()
     
     # 可以添加更多自定义URL
     # crawler.add_custom_url('https://example.com/ips')
     
-    crawler.run()
+    try:
+        crawler.run()
+    except Exception as e:
+        print(f'\n❌ 程序异常退出: {e}')
+        print('请检查网络连接或联系开发者')
 
 
 if __name__ == '__main__':
