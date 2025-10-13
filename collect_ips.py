@@ -9,6 +9,7 @@ urls = [
     'https://cf.090227.xyz', 
     'https://stock.hostmonit.com/CloudFlareYes',
     'https://www.wetest.vip/page/cloudflare/address_v4.html'
+'https://www.visa.cn'
 ]
 
 # 正则表达式用于匹配IP地址
