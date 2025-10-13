@@ -35,8 +35,8 @@ class IPCrawler:
     'https://eur.877774.xyz',
     'https://na.877774.xyz',
     'https://bpb.yousef.isegaro.com',
-    'https://cdn.xn--b6gac.eu.org'，
-    'https://cdn-b100.xn--b6gac.eu.org'，
+    
+    
     'https://netlify-cname.xingpingcn.top'，
     'https://vercel.001315.xyz'，
     'https://vercel-cname.xingpingcn.top'，
@@ -81,8 +81,8 @@ class IPCrawler:
     'https://www.udemy.com',
     'https://www.baipiao.eu.org',
     'https://cdn.anycast.eu.org',
-    'https://cdn-all.xn--b6gac.eu.org',
-    'https://xn--b6gac.eu.org',
+    
+    
     'https://edgetunnel.anycast.eu.org',
     'https://alejandracaiccedo.com',
     'https://nc.gocada.co',
@@ -94,7 +94,7 @@ class IPCrawler:
     'https://edtunnel-dgp.pages.dev',
     'https://www.d-555.com',
     'https://fbi.gov',
-    'https://*.cloudflare.182682.xyz',
+   
     'https://linux.do',
     'https://cloudflare.182682.xyz',
     'https://speed.marisalnc.com',
